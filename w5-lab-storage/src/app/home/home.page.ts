@@ -40,4 +40,60 @@ export class HomePage {
       this.output = `Error getting item: ${error}`;
     }
   }
+
+  async removeItem() {
+    try {
+      await this.storage.remove(this.key);
+      this.output = `Removed ${this.key}`;
+    }
+    catch (error) {
+      console.error('Error removing item', error);
+      this.output = `Error removing item: ${error}`;
+    }
+  }
+
+  async clearItems() {
+    try {
+      await this.storage.clear();
+      this.output = 'Cleared all items';
+    }
+    catch (error) {
+      console.error('Error clearing items', error);
+      this.output = `Error clearing items: ${error}`;
+    }
+  }
+
+  async keys() {
+    try {
+      const keys = await this.storage.keys();
+      this.output = `Keys: ${keys}`;
+    }
+    catch (error) {
+      console.error('Error getting keys', error);
+      this.output = `Error getting keys: ${error}`;
+    }
+  }
+
+  async length() {
+    try {
+      const length = await this.storage.length();
+      this.output = `Length: ${length}`;
+    }
+    catch (error) {
+      console.error('Error getting length', error);
+      this.output = `Error getting length: ${error}`;
+    }
+  }
+
+  async forEach() {
+    try {
+      await this.storage.forEach((value, key, index) => {
+        this.output = `For each: ${key} ${value} ${index}`;
+      });
+    }
+    catch (error) {
+      console.error('Error in forEach', error);
+      this.output = `Error in forEach: ${error}`;
+    }
+  }
 }
