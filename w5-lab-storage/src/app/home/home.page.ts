@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonButton } from '@ionic/angular/standalone';
-import { Storage } from '@ionic/storage-angular';
 import { FormsModule } from '@angular/forms';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +15,11 @@ export class HomePage {
   value: string = '';
   output: string = '';
 
-  constructor(private storage: Storage) {
-    storage.create();
-  }
+  constructor(private StorageService: StorageService) {}
 
   async setItem() {
     try {
-      await this.storage.set(this.key, this.value);
+      await this.StorageService.set(this.key, this.value);
       this.output = "Set ${this.key}: ${this.value}";
     }
     catch (error) {
@@ -32,7 +30,7 @@ export class HomePage {
 
   async getItem() {
     try {
-      const value = await this.storage.get(this.key);
+      const value = await this.StorageService.get(this.key);
       this.output = `Get ${this.key}: ${value}`;
     } 
     catch (error) {
@@ -43,7 +41,7 @@ export class HomePage {
 
   async removeItem() {
     try {
-      await this.storage.remove(this.key);
+      await this.StorageService.remove(this.key);
       this.output = `Removed ${this.key}`;
     }
     catch (error) {
@@ -54,7 +52,7 @@ export class HomePage {
 
   async clearItems() {
     try {
-      await this.storage.clear();
+      await this.StorageService.clear();
       this.output = 'Cleared all items';
     }
     catch (error) {
@@ -65,7 +63,7 @@ export class HomePage {
 
   async keys() {
     try {
-      const keys = await this.storage.keys();
+      const keys = await this.StorageService.keys();
       this.output = `Keys: ${keys}`;
     }
     catch (error) {
@@ -76,7 +74,7 @@ export class HomePage {
 
   async length() {
     try {
-      const length = await this.storage.length();
+      const length = await this.StorageService.length();
       this.output = `Length: ${length}`;
     }
     catch (error) {
@@ -87,7 +85,7 @@ export class HomePage {
 
   async forEach() {
     try {
-      await this.storage.forEach((value, key, index) => {
+      await this.StorageService.forEach((value, key, index) => {
         this.output = `For each: ${key} ${value} ${index}`;
       });
     }
